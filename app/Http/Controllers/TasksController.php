@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Console\View\Components\Task;
 use Illuminate\Http\Request;
+use app\Models\tasks;
+use App\Models\Project;
 
 class TasksController extends Controller
 {
@@ -11,7 +14,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -27,8 +30,24 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'description'=>'nullable',
+            'status'=>'required',
+            'project_id'=>'required'
+
+        ]);
+        tasks::Create([
+            'title'=>$request->title,
+            'description'=>$request->description,
+            'status'=>$request->status,
+            'project_id'=>$request->project_id
+
+        ]);
+
+        return back();
     }
+
 
     /**
      * Display the specified resource.

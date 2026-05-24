@@ -30,6 +30,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        //returna ala vcistta para crear un project
+        return view('projects.create');
     
     }
 
@@ -38,15 +40,34 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      //funcion para guarrdar el proyecto
+        $request->validate([
+            'title'=>'required',
+            'description'=>'nullable'
+        ]);
+        project::create([
+            'title'=>$request->title,
+            'description'=>$request->description,
+            'user_id'=>auth()->id()
+        ]);
+        return redirect()->route('projects.index');
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request,Project $project)
     {
-        //
+       $status = $request->query('status');
+           $tasks = $project->tasks()
+        ->when($status, function ($query, $status) {
+            return $query->where('status', $status);
+        })
+        ->get();
+
+    return view('projects.show', compact('project', 'tasks'));
+
     }
 
     /**
