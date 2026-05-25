@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Project extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,HasFactory;
+    
     protected $fillable=[
         'title',
         'description',
@@ -21,6 +22,6 @@ class Project extends Model
     //funcion para ifenttificar que un project puede tener muchas tareas
     public function tasks(){
 
-        return $this->hasMany(tasks::class);
+        return $this->hasMany(Tasks::class);
     }
 }
