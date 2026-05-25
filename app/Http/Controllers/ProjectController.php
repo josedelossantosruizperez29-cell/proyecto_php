@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Models\Tasks;
 
 class ProjectController extends Controller
 {
@@ -66,7 +67,13 @@ class ProjectController extends Controller
         })
         ->get();
 
-    return view('projects.show', compact('project', 'tasks'));
+        $deletedTasks =
+        Tasks::onlyTrashed()->where(
+            'project_id',
+            $project->id
+        )->get();
+
+    return view('projects.show', compact('project', 'tasks','deletedTasks'));
 
     }
 

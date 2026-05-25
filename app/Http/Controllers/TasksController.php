@@ -21,9 +21,10 @@ class TasksController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('Tasks.create');
+        $project=Project::findOrFail($request->project);
+        return view('tasks.create',compact('project'));
     }
 
     /**
@@ -34,19 +35,20 @@ class TasksController extends Controller
         $request->validate([
             'title'=>'required',
             'description'=>'nullable',
-            'status'=>'required',
+            'due_date'=>'required',
             'project_id'=>'required'
 
         ]);
         tasks::Create([
             'title'=>$request->title,
             'description'=>$request->description,
-            'status'=>$request->status,
+            'status'=>'Pendiente',
+            'due_date'=>$request->due_date,
             'project_id'=>$request->project_id
 
         ]);
 
-        return back();
+        return redirect()->route('projects.show', $request->project_id);
     }
 
 
@@ -69,15 +71,11 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tasks $task)
+    public function update(Request $request, Tasks $tasks)
     {
         //funcion para el estado de la tarea tareas
-        $request->validate([
-            'status'=>'required'
-        ]);
-
-        $task->status=$request->status;
-        $task->save();
+        $tasks->status=$request->status;
+        $tasks->save();
 
         return back();
     }
@@ -90,4 +88,11 @@ class TasksController extends Controller
         $tasks->delete();
         return back();
     }
+
+    public function restore($id){
+        $tasks=Tasks::onlyTrashed()->findOrFail($id);
+        $tasks->restore();
+        return back();
+    }
+
 }

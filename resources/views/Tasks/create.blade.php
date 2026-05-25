@@ -29,6 +29,29 @@
         ></textarea>
     </div>
 
+        <div class="mb-5">
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+            fecha de vencimiento
+        </label>
+
+        <input
+            name="due_date"
+            type="text"
+            placeholder="Ingrese el nombre del proyecto"
+            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        >
+         </div>
+             <div class="mb-5">
+
+
+        <input
+            name="project_id"
+            type="hidden"
+            value="{{ $project->id }}"
+            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        >
+    </div>
+
     <button
         type="submit"
         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-sm hover:shadow"

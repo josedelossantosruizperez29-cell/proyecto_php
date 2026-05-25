@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
 Route::resource('tasks',TasksController::class)->parameters(['tasks'=>'tasks']);
 Route::resource('projects',ProjectController::class);
+Route::post('/tasks/{id}/restore', [TasksController::class, 'restore'])->name('tasks.restore');
 
 });
 
