@@ -1,7 +1,7 @@
 <x-layouts::app>
 
 <div class="relative top-20 max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md border border-gray-200">
-<form action="{{ route('Tasks.store') }}" method="POST">
+<form action="{{ route('tasks.store') }}" method="POST">
     @csrf
     <div class="mb-5">
         <label class="block text-sm font-semibold text-gray-700 mb-2">
@@ -27,6 +27,29 @@
             placeholder="Detalle de la terea"
             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 resize-y"
         ></textarea>
+    </div>
+
+        <div class="mb-5">
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+            fecha de vencimiento
+        </label>
+
+        <input
+            name="due_date"
+            type="text"
+            placeholder="Ingrese el nombre del proyecto"
+            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        >
+         </div>
+             <div class="mb-5">
+
+
+        <input
+            name="project_id"
+            type="hidden"
+            value="{{ $project->id }}"
+            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        >
     </div>
 
     <button

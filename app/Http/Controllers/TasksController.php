@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Console\View\Components\Task;
 use Illuminate\Http\Request;
-use app\Models\tasks;
+use App\Models\Tasks;
 use App\Models\Project;
 use View;
 
@@ -21,9 +21,10 @@ class TasksController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('Tasks.create');
+        $project=Project::findOrFail($request->project);
+        return view('tasks.create',compact('project'));
     }
 
     /**
@@ -34,19 +35,20 @@ class TasksController extends Controller
         $request->validate([
             'title'=>'required',
             'description'=>'nullable',
-            'status'=>'required',
+            'due_date'=>'required',
             'project_id'=>'required'
 
         ]);
         tasks::Create([
             'title'=>$request->title,
             'description'=>$request->description,
-            'status'=>$request->status,
+            'status'=>'Pendiente',
+            'due_date'=>$request->due_date,
             'project_id'=>$request->project_id
 
         ]);
 
-        return back();
+        return redirect()->route('projects.show', $request->project_id);
     }
 
 
@@ -69,16 +71,28 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Tasks $tasks)
     {
-        //
+        //funcion para el estado de la tarea tareas
+        $tasks->status=$request->status;
+        $tasks->save();
+
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tasks $tasks)
     {
-        //
+        $tasks->delete();
+        return back();
     }
+
+    public function restore($id){
+        $tasks=Tasks::onlyTrashed()->findOrFail($id);
+        $tasks->restore();
+        return back();
+    }
+
 }

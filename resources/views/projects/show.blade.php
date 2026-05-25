@@ -18,7 +18,7 @@
                 </span>
             </h3>
             
-            <a href="{{ route('Tasks.create') }}" 
+            <a href="{{ route('tasks.create') }}?project={{ $project->id }}" 
                class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 transition-all duration-300 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-blue-500/20 text-sm target:scale-95">
                 <span class="text-lg font-bold">+</span>
                 Nueva Tarea
@@ -49,40 +49,71 @@
             </a>
         </div>
     </div>
-    <div class="space-y-4">
-        @foreach ($tasks as $task)
-            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-200 hover:border-gray-300">
-                <h4 class="text-lg font-semibold text-gray-900 mb-3">{{ $task->title }}</h4>
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                    <p class="text-sm text-gray-700 flex items-center">
-                        <span class="font-medium text-gray-500">Estado:</span>
+   <div class="space-y-4">
+    @forelse ($tasks as $task)
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-200 hover:border-gray-300">
+            <h4 class="text-lg font-semibold text-gray-900 mb-4">{{ $task->title }}</h4>
+            
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-medium text-gray-500">Estado:</span>
+                    
+                    <form method="POST" action="{{ route('tasks.update', $task) }}" class="flex items-center gap-2 m-0">
+                        @csrf
+                        @method('PUT')
                         
-                        @if ($task->status == "En proceso")
-                        <span class="ml-2 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-200">
-                            {{ $task->status }}
-                        </span>
-                        @endif
+                        <select name="status" 
+                                class="text-xs font-semibold bg-white border border-gray-300 rounded-xl px-3 py-1.5 text-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm cursor-pointer">
+                                <option @selected($task->status === 'Pendiente')>Pendiente</option>
+                                <option @selected($task->status === 'En Proceso')>En Proceso</option>
+                                <option @selected($task->status === 'Completada')>Completada</option>
+                        </select>
                         
-                        @if ($task->status == "Pendiente")
-                        <span class="ml-2 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
-                            {{ $task->status }}
-                        </span>
-                        @endif
-                        
-                        @if ($task->status == "Completada")
-                        <span class="ml-2 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">
-                            {{ $task->status }}
-                        </span>
-                        @endif
-                    </p>
-                    <p class="text-sm text-gray-500 flex items-center gap-1">
-                        <span class="font-medium text-gray-400">Fecha límite:</span> 
-                        <span class="font-medium text-gray-700">{{ $task->due_date }}</span>
-                    </p>
+                        <button type="submit" 
+                                class="bg-gray-900 hover:bg-gray-800 text-white text-xs font-medium px-3 py-1.5 rounded-xl transition-all duration-200 shadow-sm active:scale-95 border border-transparent">
+                            Actualizar
+                        </button>
+                    </form>
+                    
                 </div>
-            </div>
-        @endforeach
-    </div>
+                <form  method="POST" action="{{ route('tasks.destroy',$task) }}">
+                    @csrf
+                    @method('DELETE')
 
+                    <button class="bg-red-600 text-white px-3 py-1 rounded" type="submit">Eliminar</button>
+                </form>
+                <p class="text-sm text-gray-500 flex items-center gap-1">
+                    <span class="font-medium text-gray-400">Fecha límite:</span> 
+                    <span class="font-medium text-gray-700">{{ $task->due_date }}</span>
+                </p>
+            </div>
+        </div>
+    @empty
+        <div class="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+            <p class="text-gray-400 font-medium">No hay tareas en este estado actualmente.</p>
+        </div>
+    @endforelse
+</div>
+<h3>Papelera</h3>
+<div>
+    @forelse($deletedTasks as $task)
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-200 hover:border-gray-300">
+            <h4 class="text-lg font-semibold text-gray-900 mb-4">{{ $task->title }}</h4>
+            <p class="text-sm text-gray-500 flex items-center gap-1">
+                <span class="font-medium text-gray-400">Fecha límite:</span> 
+                <span class="font-medium text-gray-700">{{ $task->due_date }}</span>
+                <form method="POST" action="{{ route('tasks.restore', $task) }}" >
+                    @csrf
+                    <button class="relative top-1 bg-green-600 text-white px-3 py-1 rounded" type="submit">Restaurar</button>
+                </form>
+            </p>
+        </div>
+    @empty
+        <div class="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+            <p class="text-gray-400 font-medium">No hay tareas en la papelera.</p>
+        </div>
+    @endforelse
+</div>
 </div>
 </x-layouts::app>
