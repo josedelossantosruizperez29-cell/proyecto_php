@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Console\View\Components\Task;
 use Illuminate\Http\Request;
-use app\Models\tasks;
+use App\Models\Tasks;
 use App\Models\Project;
 use View;
 
@@ -69,16 +69,25 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Tasks $task)
     {
-        //
+        //funcion para el estado de la tarea tareas
+        $request->validate([
+            'status'=>'required'
+        ]);
+
+        $task->status=$request->status;
+        $task->save();
+
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tasks $tasks)
     {
-        //
+        $tasks->delete();
+        return back();
     }
 }

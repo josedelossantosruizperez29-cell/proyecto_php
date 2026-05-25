@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::middleware('auth')->group(function () {
-Route::resource('Tasks',TasksController::class);
+Route::resource('tasks',TasksController::class)->parameters(['tasks'=>'tasks']);
 Route::resource('projects',ProjectController::class);
 
 });

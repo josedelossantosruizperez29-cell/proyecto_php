@@ -1,7 +1,7 @@
 <x-layouts::app>
 
 <div class="relative top-20 max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md border border-gray-200">
-<form action="{{ route('Tasks.store') }}" method="POST">
+<form action="{{ route('tasks.store') }}" method="POST">
     @csrf
     <div class="mb-5">
         <label class="block text-sm font-semibold text-gray-700 mb-2">
