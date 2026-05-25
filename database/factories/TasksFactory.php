@@ -27,7 +27,7 @@ class TasksFactory extends Factory
             ]),
 
             'due_date'=>fake()->date(),
-            'project_id'=>1
+            'project_id'=> \App\Models\Project::inRandomOrder()->first()->id
         ];
     }
 }

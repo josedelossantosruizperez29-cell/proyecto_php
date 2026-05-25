@@ -6,6 +6,7 @@ use Illuminate\Console\View\Components\Task;
 use Illuminate\Http\Request;
 use app\Models\tasks;
 use App\Models\Project;
+use View;
 
 class TasksController extends Controller
 {
@@ -22,7 +23,7 @@ class TasksController extends Controller
      */
     public function create()
     {
-        //
+        return view('Tasks.create');
     }
 
     /**
