@@ -88,15 +88,23 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //funcion para retornar la vista para editar un project
+        $project=Project::findOrFail($id);
+        return view('projects.edit',compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,Project $project)
     {
-        //
+        // funcion para actualizar un project
+        $project->update([
+            'title'=>$request->title,
+            'description'=>$request->description
+        ]);
+        return redirect()->route('projects.index', $project->id);
+
     }
 
     /**
