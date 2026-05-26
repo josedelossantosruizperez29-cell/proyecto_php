@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Tasks extends Model
 {
     use HasFactory,SoftDeletes;
+
+    public function isOverdue(){
+        return $this->due_date < now() && $this->status == 'Pendiente'; 
+    }
     protected $fillable=[
         'title',
         'description',
