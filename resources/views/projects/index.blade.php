@@ -75,7 +75,7 @@
 
                         <div class="flex gap-3">
 
-                            <a href="#" class="px-4 py-2 rounded-xl
+                            <a href="{{ route('projects.edit', $project) }}" class="px-4 py-2 rounded-xl
                                        bg-gray-100 hover:bg-gray-200
                                        text-gray-700 text-sm font-medium
                                        transition">
