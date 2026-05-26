@@ -22,7 +22,7 @@ return new class extends Migration
             ])->default('Pendiente');
             $table->timestamps();
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
-            $table->dateTime('due_date');
+            $table->date('due_date');
         });
 
     }

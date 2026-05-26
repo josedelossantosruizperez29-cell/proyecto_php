@@ -60,6 +60,10 @@ class ProjectController extends Controller
      */
     public function show(Request $request,Project $project)
     {
+
+    if($project->user_id !== auth()->id()){
+        return abort(403);
+    }else{
        $status = $request->query('status');
            $tasks = $project->tasks()
         ->when($status, function ($query, $status) {
@@ -75,6 +79,8 @@ class ProjectController extends Controller
 
     return view('projects.show', compact('project', 'tasks','deletedTasks'));
 
+    }
+        
     }
 
     /**
