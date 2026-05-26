@@ -17,6 +17,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/settings/security',function () {
+        return view('settings.security');
+    })->name('security.edit');
+    Route::get('/settings/profile',function () {
+        return view('settings.profile');
+    })->name('profile.edit');
 });
 Route::middleware('auth')->group(function () {
 Route::resource('tasks',TasksController::class)->parameters(['tasks'=>'tasks']);
