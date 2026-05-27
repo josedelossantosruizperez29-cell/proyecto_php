@@ -32,8 +32,10 @@
                     :placeholder="__('Password')"
                     viewable
                 />
-
-                @if (Route::has('password.request'))
+                <a href="{{ route('register') }}">Registrarme</a>
+                
+                @if (Route::has('password.request'))    
+                
                     <flux:link class="absolute top-0 text-sm end-0" :href="route('password.request')" wire:navigate>
                         {{ __('Forgot your password?') }}
                     </flux:link>
@@ -49,10 +51,15 @@
                 </flux:button>
             </div>
         </form>
+        <div class="text-center">
+    <span>¿No tienes cuenta?</span>
 
-        <div class="space-x-1 text-sm text-center rtl:space-x-reverse text-zinc-600">
-            <span>{{ __('Don\'t have an account?') }}</span>
-            <flux:link :href="route('register')" wire:navigate>{{ __('Sign up') }}</flux:link>
-        </div>
+    <a
+        href="{{ route('register') }}"
+        class="text-blue-600 font-bold"
+    >
+        Registrarme
+    </a>
+</div>
     </div>
 </x-layouts::auth>

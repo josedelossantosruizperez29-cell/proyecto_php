@@ -3,6 +3,7 @@
 
         {{-- HEADER --}}
         <div class="flex items-center justify-between mb-10">
+            
 
             <div>
                 <h1 class="text-5xl font-bold text-gray-700 tracking-tight">
@@ -14,12 +15,13 @@
                 </p>
             </div>
 
-            <a href="{{ route('projects.create') }}" class="bg-blue-600 hover:bg-blue-700 transition-all duration-300
+            <a href="{{ route('projects.create') }}" class="relative left-[270px] bg-blue-600 hover:bg-blue-700 transition-all duration-300
                    text-white px-6 py-3 rounded-2xl font-medium
                    shadow-lg shadow-blue-500/20 flex items-center gap-2">
                 <span class="text-2xl">+</span>
                 Nuevo proyecto
             </a>
+            <a href="{{ route('projects.trash') }}" class="hover:scale-110 transition"> <img class="w-6 h-6" src="https://i.postimg.cc/Qx8djyxX/papelera-de-reciclaje.png" alt="Papelera"></a>
 
         </div>
 
@@ -88,6 +90,16 @@
                                        transition">
                                 Ver
                             </a>
+                            <form method="POST" action="{{ route('projects.destroy', $project) }}" >
+                                @csrf
+                                @method('DELETE')
+                                <button class="px-4 py-2 rounded-xl
+                                       bg-red-600 hover:bg-red-700
+                                       text-white text-sm font-medium
+                                       transition">
+                                    Eliminar
+                                </button>
+                            </form>
 
                         </div>
 
