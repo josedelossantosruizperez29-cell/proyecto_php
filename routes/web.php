@@ -29,6 +29,8 @@ Route::resource('tasks',TasksController::class)->parameters(['tasks'=>'tasks']);
 Route::resource('projects',ProjectController::class);
 Route::post('/tasks/{id}/restore', [TasksController::class, 'restore'])->name('tasks.restore');
 Route::put('/project/{project}', [ProjectController::class, 'update'])->name('projects.update');
+Route::get('/project/trash', [ProjectController::class, 'trash'])->name('projects.trash');
+Route::post('/project/{id}/restore', [ProjectController::class, 'restore'])->name('projects.restore');
 
 });
 

@@ -99,16 +99,7 @@
                 </x-dropdown>
 
                 <!-- Papelera afuera -->
-                <a
-                    href=""
-                    class="hover:scale-110 transition">
-
-                    <img
-                        class="w-6 h-6"
-                        src="https://i.postimg.cc/Qx8djyxX/papelera-de-reciclaje.png"
-                        alt="Papelera">
-
-                </a>
+  
 
             </div>
 

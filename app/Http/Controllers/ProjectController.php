@@ -71,6 +71,7 @@ class ProjectController extends Controller
         })
         ->get();
 
+
         $deletedTasks =
         Tasks::onlyTrashed()->where(
             'project_id',
@@ -110,8 +111,29 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(project $project)
     {
-        //
+        //fucion para eliminar un project
+        $project->delete();
+        return redirect()->route('projects.index');
     }
+    
+
+    public function trash(){
+        $projects=Project::onlyTrashed()->where(
+            'user_id',
+            auth()->id()
+        )->get();
+        return view('projects.trash',compact('projects'));
+    }
+
+    public function restore($id){
+        $project=Project::onlyTrashed()->findOrFail($id);
+        $project->restore();
+        return redirect()->route('projects.index')->with('success','el proyecto ha sido restaurado '.$project->title);
+        //mensaje de confirmacion
+
+    }
+
+    
 }
