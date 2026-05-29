@@ -95,4 +95,19 @@ class TasksController extends Controller
         return back();
     }
 
+    public function forcedelete($id){
+        //funcion para elominar una tarea permanentente
+        $tasks= Tasks::onlyTrashed()->findOrFail($id);
+        $tasks->forceDelete();
+        return back();
+    }
+
+    public function trash(Project $project){
+        $deletedTasks=Tasks::onlyTrashed()->where(
+            'project_id',$project->id
+        )->get();
+
+        return view('tasks.trash',compact('deletedTasks'));
+    }
+
 }

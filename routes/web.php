@@ -31,6 +31,9 @@ Route::post('/tasks/{id}/restore', [TasksController::class, 'restore'])->name('t
 Route::put('/project/{project}', [ProjectController::class, 'update'])->name('projects.update');
 Route::get('/project/trash', [ProjectController::class, 'trash'])->name('projects.trash');
 Route::post('/project/{id}/restore', [ProjectController::class, 'restore'])->name('projects.restore');
+Route::put('/project/{id}/deleteforce',[ProjectController::class, 'deleteforce'])->name('projects.deleteforce');
+Route::put('/tasks/{id}/forcedelete',[TasksController::class, 'forcedelete'])->name('tasks.forcedelete');
+Route::get('tasks/{project}/trash',[TasksController::class,'trash'])->name('tasks.trash');
 
 });
 
