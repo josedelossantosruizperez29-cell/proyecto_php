@@ -17,6 +17,7 @@
                     {{ $project->tasks->count() }}
                 </span>
             </h3>
+             <a href="{{ route('tasks.trash',$project) }}" class="relative right-[260px] hover:scale-110 transition"> <img class="w-6 h-6" src="https://i.postimg.cc/Qx8djyxX/papelera-de-reciclaje.png" alt="Papelera"></a>
             
             <a href="{{ route('tasks.create') }}?project={{ $project->id }}" 
                class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 transition-all duration-300 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-blue-500/20 text-sm target:scale-95">
@@ -92,26 +93,6 @@
     @empty
         <div class="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
             <p class="text-gray-400 font-medium">No hay tareas en este estado actualmente.</p>
-        </div>
-    @endforelse
-</div>
-<h3>Papelera</h3>
-<div>
-    @forelse($deletedTasks as $task)
-        <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-200 hover:border-gray-300">
-            <h4 class="text-lg font-semibold text-gray-900 mb-4">{{ $task->title }}</h4>
-            <p class="text-sm text-gray-500 flex items-center gap-1">
-                <span class="font-medium text-gray-400">Fecha límite:</span> 
-                <span class="font-medium text-gray-700">{{ $task->due_date }}</span>
-                <form method="POST" action="{{ route('tasks.restore', $task) }}" >
-                    @csrf
-                    <button class="relative top-1 bg-green-600 text-white px-3 py-1 rounded" type="submit">Restaurar</button>
-                </form>
-            </p>
-        </div>
-    @empty
-        <div class="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
-            <p class="text-gray-400 font-medium">No hay tareas en la papelera.</p>
         </div>
     @endforelse
 </div>

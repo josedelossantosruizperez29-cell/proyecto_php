@@ -88,6 +88,7 @@ class ProjectController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
+    
     {
         //funcion para retornar la vista para editar un project
         $project=Project::findOrFail($id);
@@ -133,6 +134,13 @@ class ProjectController extends Controller
         return redirect()->route('projects.index')->with('success','el proyecto ha sido restaurado '.$project->title);
         //mensaje de confirmacion
 
+    }
+
+    public function deleteforce($id){
+        // funcion para eliminar un proyecto permanente mente 
+        $project=Project::onlyTrashed()->findOrFail($id);
+        $project->forceDelete();
+        return redirect()->route('projects.trash');
     }
 
     
